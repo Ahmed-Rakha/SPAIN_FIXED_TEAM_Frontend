@@ -209,7 +209,7 @@ export default function Analysis() {
                 }
               }}
             >
-              Total de casos gestionados: {totalHandledCases}
+              Total de instalaciones gestionadas: {totalHandledCases}
             </Typography>
           </Box>
 
