@@ -155,7 +155,9 @@ export default function Analysis() {
       )
     );
   }, 0);
-
+  const totalTramitados = filteredCases.reduce((total, caseItem) => {
+    return total + (caseItem.statusCounts["tramitado"] || 0);
+  }, 0);
   return (
     <>
       {cases.length === 0 ? (
@@ -180,6 +182,36 @@ export default function Analysis() {
                 onChange={(e) => setFilterText2(e.target.value)}
               />
             </Box>
+            <Typography
+              variant="h6"
+              sx={{
+                padding: 2,
+                fontWeight: "bold",
+                backgroundColor: "#f0f4ff",
+                borderRadius: "8px",
+                margin: "16px 0",
+                boxShadow: 1,
+                color: blue[800],
+                fontSize: ".9rem",
+                marginRight: 3,
+                
+                "&:hover": {
+                  backgroundColor: "#f0f4ff",
+                  color: blue[800],
+                  textDecoration: "underline",
+                  textUnderlineOffset: "5px",
+                  textDecorationColor: blue[800],
+                  textDecorationThickness: "2px",
+                  textDecorationStyle: "solid",
+                  boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+                  transition: "all 0.3s ease",
+                  transform: "scale(1.02)",
+                
+                }
+              }}
+            >
+              Total de instalaciones tramitadas: {totalTramitados}
+            </Typography>
             <Typography
               variant="h6"
               sx={{
