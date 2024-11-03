@@ -19,7 +19,7 @@ import { getHandledCasesByUsersApi } from "../../../services/getHandledCasesByUs
 import { format } from "date-fns";
 import { indigo } from "@mui/material/colors";
 import { createFileRoute } from "@tanstack/react-router";
-import { Button, Grid2, styled, TextField } from "@mui/material";
+import { Button, Grid2, styled, TextField, Select, MenuItem } from "@mui/material";
 import { useForm } from "react-hook-form";
 import MultiSelect from "../../../components/Admin/TablesSection/MultiSelect";
 import UnauthenticatedFallback from "../../../components/fallbacks/UnauthenticatedFallback";
@@ -136,7 +136,6 @@ export default function UsersHandledCasesTable() {
   } = useForm();
 
   const onSubmitFilters = (data) => {
-    console.log("Data:", data);
     setFilters(data);
   };
 
@@ -145,19 +144,12 @@ export default function UsersHandledCasesTable() {
       data.selectedHeaders.includes(column.id)
     );
     setFilterColumns(filterOriginalColumns);
-    console.log("originalData", data);
-    console.log("filteredColumns", filteredColumns);
+   
   };
   const handleResetFilteredColumns = () => {
     resetProjection({ selectedHeaders: [] });
     setFilterColumns(columns);
-    // setFilters({
-    //   idCase: "",
-    //   status: "",
-    //   createdBy: "",
-    //   startDate: "",
-    //   endDate: "",
-    // });
+   
   };
   const {
     data: cases,
@@ -172,7 +164,6 @@ export default function UsersHandledCasesTable() {
   if (isFetchingCases) {
     return <LoadingSpinner />;
   }
-  console.log(error);
 
   if (isError) {
     switch (error.errorType) {
@@ -231,7 +222,7 @@ export default function UsersHandledCasesTable() {
     }));
   });
   const filteredRows = flattenedRows.filter((row) => {
-    const matchesIdCase = row.idCase.toString().includes(row.idCase);
+    const matchesIdCase = row.idCase.toString().includes(filters.idCase); // Update this line
     const matchesStatus = row.status
       .toLowerCase()
       .includes(filters.status.toLowerCase());
@@ -289,12 +280,43 @@ export default function UsersHandledCasesTable() {
                 />
               </Grid2>
               <Grid2 size={{ xs: 2 }}>
-                <TextFieldStyled
+                <Select
                   label="Estado"
                   name="status"
+                  defaultValue={""}
                   fullWidth
                   {...registerFilter("status")}
-                />
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                  sx={{
+                    "& .MuiSelect-icon": {
+                      color: "#fff", // Change the icon color to white
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#fff",
+                    },
+                    "&:hover .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#fff",
+                    },
+                    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "#fff",
+                    },
+                    "& .MuiSelect-select": {
+                      color: "#fff", 
+                    },
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>Seleccione un estado</em>
+                  </MenuItem>
+                  <MenuItem value="CIF Bloqueado">CIF Bloqueado</MenuItem>
+                  <MenuItem value="Tramitado">Tramitado</MenuItem>
+                  <MenuItem value="Pdt sistema">Pdt sistema</MenuItem>
+                  <MenuItem value="Automation">Automation</MenuItem>
+                  <MenuItem value="Preselección-Vois">
+                    Preselección-Vois
+                  </MenuItem>
+                </Select>
               </Grid2>
               <Grid2 size={{ xs: 2 }}>
                 <TextFieldStyled
