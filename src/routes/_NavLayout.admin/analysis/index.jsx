@@ -335,7 +335,7 @@ export default function Analysis() {
               "& .css-pdct74-MuiTablePagination-selectLabel": {
                 display: "flex",
                 alignItems: "center",
-                
+                margin: "0 8px",
               },
             }}
           />
