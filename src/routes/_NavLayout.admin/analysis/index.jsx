@@ -98,22 +98,21 @@ export default function Analysis() {
   // Filter and sort summaryArray based on two filter texts
   const filteredCases = summaryArray.filter((caseItem) => {
     const formattedDate = new Date(caseItem.dateProgress).toLocaleDateString();
-    const matchesFilter1 = Object.values({
-      ...caseItem,
-      dateProgress: formattedDate,
-    }).some((value) =>
-      String(value).toLowerCase().includes(filterText1.toLowerCase())
-    );
-    const matchesFilter2 = Object.values({ ...caseItem }).some((value) =>
-      String(value).toLowerCase().includes(filterText2.toLowerCase())
-    );
-
-    return (
-      (filterText1 === "" || matchesFilter1) &&
-      (filterText2 === "" || matchesFilter2)
-    );
+  
+    const matchesFilter1 = 
+      filterText1 === "" || 
+      [caseItem.idCase, formattedDate, caseItem.userName].some((value) =>
+        String(value).toLowerCase().includes(filterText1.toLowerCase())
+      );
+  
+    const matchesFilter2 = 
+      filterText2 === "" || 
+      [caseItem.idCase, formattedDate, caseItem.userName].some((value) =>
+        String(value).toLowerCase().includes(filterText2.toLowerCase())
+      );
+  
+    return matchesFilter1 && matchesFilter2;
   });
-
   const sortedCases = filteredCases.sort((a, b) => {
     let aValue = a[orderBy];
     let bValue = b[orderBy];
