@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const addCaseDetailsByUser = async (data) =>{
+export const addCaseDetailsByUser = async (data) => {
   try {
     const response = await fetch(`${API_URL}/api/user/cases`, {
       method: "POST",
@@ -27,16 +27,15 @@ export const addCaseDetailsByUser = async (data) =>{
   }
 };
 
-export const editStatusCASE = async ({query, modifiedData}) => {
-  console.log('welcomeeee');
-  
+export const editStatusCASE = async ({ query, modifiedData }) => {
+  console.log("welcomeeee");
+
   console.log(`${API_URL}/api/user/cases?${query}`);
   const queryString = new URLSearchParams(query).toString();
 
   console.log("modifiedData", modifiedData);
   console.log("queryString", queryString);
-  
-  
+
   try {
     const response = await fetch(`${API_URL}/api/user/cases?${queryString}`, {
       method: "PATCH",
@@ -55,7 +54,7 @@ export const editStatusCASE = async ({query, modifiedData}) => {
     }
     const result = await response.json();
     console.log("resultttttt", result.data.caseGrande);
-    
+
     return result.data.caseGrande;
   } catch (error) {
     console.error("Error editing case:", error);

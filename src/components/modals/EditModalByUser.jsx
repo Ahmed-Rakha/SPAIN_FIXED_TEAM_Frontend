@@ -66,16 +66,21 @@ export default function EditModalByUser({ targetCase }) {
     register,
     handleSubmit,
     reset,
-    formState: { errors }, watch
+    formState: { errors },
+    watch,
   } = useForm({});
-  const currentStatus = watch('status', targetCase.status);
-  console.log("currentStatus", currentStatus);
-  
-  const { mutate: editCaseStatusMutate, data, isPending:isUpdating } = useMutation({
+  const currentStatus = watch("status", targetCase.status);
+
+  const {
+    mutate: editCaseStatusMutate,
+    data,
+    isPending: isUpdating,
+  } = useMutation({
     mutationFn: editStatusCASE,
     onSuccess: () => {
       toast.success("Caso editado exitosamente");
-      queryClient.invalidateQueries(['getCasesHandledByUser']);
+      queryClient.invalidateQueries(["getCasesHandledByUser"]);
+
       setTimeout(() => {
         handleClose();
       }, 3000);
@@ -96,8 +101,7 @@ export default function EditModalByUser({ targetCase }) {
       status,
     };
     console.log("modifiedData", modifiedData);
-    
-    editCaseStatusMutate({query, modifiedData});
+    editCaseStatusMutate({ query, modifiedData });
   };
   const formFields = [
     { name: "idCase", label: "Id Caso" },
